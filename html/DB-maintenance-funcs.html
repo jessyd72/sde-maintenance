@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>DB-maintenance-funcs API documentation</title>
+<meta name="description" content="Completes recommended geodatabase maintenance on a
+traditional versioned database using either an existing
+connection string or a new connection …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>DB-maintenance-funcs</code></h1>
+</header>
+<section id="section-intro">
+<p>Completes recommended geodatabase maintenance on a
+traditional versioned database using either an existing
+connection string or a new connection string built during run.
+Connection file or requirements to build connection must be stored
+in the config.json file. An environemnt must be specified in
+the env.json file (dev, stage, or prod).
+Recommended geodatabase maintenance includes:</p>
+<pre><code>    - Reconciling and posting all child versions
+    - Compressing the database to state 0
+    - Rebuilding all indexes (spatial, attribute, and database)
+    - Analze datasets to recalculate statistics
+</code></pre>
+<p>Author:
+J. Beasley, Geographic Technologies Group (GTG)</p>
+<p>Version History:
+12/15/2022
+|
+J. Beasley
+|
+Script created</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Completes recommended geodatabase maintenance on a 
+traditional versioned database using either an existing
+connection string or a new connection string built during run. 
+Connection file or requirements to build connection must be stored
+in the config.json file. An environemnt must be specified in
+the env.json file (dev, stage, or prod). 
+Recommended geodatabase maintenance includes:
+
+        - Reconciling and posting all child versions
+        - Compressing the database to state 0
+        - Rebuilding all indexes (spatial, attribute, and database)
+        - Analze datasets to recalculate statistics
+
+Author: 
+        J. Beasley, Geographic Technologies Group (GTG)
+
+Version History:
+        12/15/2022      |       J. Beasley      |       Script created
+&#34;&#34;&#34;
+
+
+# imports
+import arcpy
+import datetime
+import json
+import logging 
+import os
+import sys
+
+
+def buildCxn(cfg):
+        &#39;&#39;&#39;
+        Reads json dictionary for database connection inforamtion.
+        If a connection string is provided, that will be prioritized. 
+        If no connection string is provided, a new connection will be 
+        built using provided parameters in config file. 
+        The json dictionary is expected to have the following keys:
+                sde_cxn, rdbms, instance, auth, un, pw, db_name, verison
+        Args:
+                cfg: JSON dict containing the following keys at minimum- 
+                        sde_cxn, rdbms, instance, auth, un, pw, db_name, verison.
+        Returns:
+                sde: path to sde (Enterprise geodatabase) connection file.
+                built: Boolean indicating if the connection file was created 
+                        in this function. Used to determine if file can be removed
+                        after database maintenance completes. 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to build connection file&#34;)
+
+        # Set database connection
+        built = 0
+        db_cxn_vars = [cfg[x] for x in [&#34;rdbms&#34;, &#34;instance&#34;, &#34;auth&#34;, &#34;un&#34;, &#34;pw&#34;, &#34;db_name&#34;]]
+        try:
+                if cfg[&#34;sde_cxn&#34;]:
+                        # if cxn string provided, use that
+                        sde = cfg[&#34;sde_cxn&#34;]
+                        logging.info(f&#34;Using connection string: {sde}&#34;)
+                elif all(db_cxn_vars):
+                        # if no cxn string and all required cxn params
+                        # provied, build new cxn string
+                        logging.info(&#34;Buidling new connection string&#34;)
+                        rdbms, instance, auth, un, pw, db_name = db_cxn_vars
+                        version = cfg[&#34;version&#34;]
+                        try:
+                                arcpy.CreateDatabaseConnection_management(sde_cxn_fldr,
+                                                                                                        f&#34;{un}@{db_name}&#34;, 
+                                                                                                        rdbms, 
+                                                                                                        instance, 
+                                                                                                        auth, 
+                                                                                                        un, 
+                                                                                                        pw, 
+                                                                                                        database=db_name,
+                                                                                                        version=version)
+                                sde = os.path.join(sde_cxn_fldr, f&#34;{un}@{db_name}.sde&#34;)
+                                logging.info(f&#34;Using connection string: {sde}&#34;)
+                                built = 1
+                        except Exception as e:
+                                logging.error(e)
+                else:
+                        # cannot connect to database
+                        logging.error(&#34;Missing required information to connect to database. \n \
+                                Confirm the env and config files contain either a connection \n \
+                                string or information to build a new connection file.&#34;)
+                        sys.exit(1)
+        except KeyError:
+                logging.error(&#34;Key missing from config file. \n \
+                        The config (json) must contain the following keys, regardless if the \
+                        key has a value: sde_cxn, rdbms, instance, auth, un, pw, db_name, verison&#34;)
+                sys.exit(1)
+        except Exception as e:
+                logging.error(e)
+                sys.exit(1)
+
+        return(sde, built)
+
+
+def reconcileVersions(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, gets list of all versions 
+        except DEFAULT for reconiliation. 
+        First, all versions are recondiled to their targets without post. If
+        first reconciliation completes, a second reconiliation occurs with 
+        posting to their target. Versions are maintained. 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to reconcile versions&#34;)
+
+        # Set the workspace environment
+        arcpy.env.workspace = sde
+
+        # Use a list comprehension to get a list of version names where the owner
+        # is the current user and make sure sde.default is not selected.
+        # removed ver.isOwner == True, TODO: determine if this works for Solano
+        logging.info(&#34;Listing all child versions&#34;)
+        verList = [ver.name for ver in arcpy.da.ListVersions() if 
+                                ver.name.lower() != &#39;sde.default&#39;] 
+
+        logging.info(&#39;Starting the 1st reconciliation&#39;)
+
+        arcpy.ReconcileVersions_management(sde,
+                                                                        &#34;ALL_VERSIONS&#34;,
+                                                                        &#34;SDE.Default&#34;,
+                                                                        verList,
+                                                                        &#34;LOCK_ACQUIRED&#34;,
+                                                                        &#34;NO_ABORT&#34;,
+                                                                        &#34;BY_OBJECT&#34;, #TODO: look into for conflicts
+                                                                        &#34;FAVOR_TARGET_VERSION&#34;,
+                                                                        &#34;NO_POST&#34;,
+                                                                        &#34;KEEP_VERSION&#34;,
+                                                                        f&#34;{log_fldr}, RecLog_{timestamp}.txt&#34;)
+        logging.info(&#39;Reconciling part 1 complete&#39;)
+
+        logging.info(&#39;Starting the 2nd reconciliation with post&#39;)
+
+        arcpy.ReconcileVersions_management(sde,
+                                                                        &#34;ALL_VERSIONS&#34;,
+                                                                        &#34;SDE.Default&#34;,
+                                                                        verList,
+                                                                        &#34;LOCK_ACQUIRED&#34;,
+                                                                        &#34;NO_ABORT&#34;,
+                                                                        &#34;BY_OBJECT&#34;,
+                                                                        &#34;FAVOR_TARGET_VERSION&#34;,
+                                                                        &#34;POST&#34;, 
+                                                                        &#34;KEEP_VERSION&#34;,
+                                                                        f&#34;{log_fldr}, RecLog_{timestamp}.txt&#34;)
+
+        logging.info(&#39;Reconciling part 2 complete&#39;)
+        logging.info(&#39;Versions have been posted after reconciliation&#39;)
+
+
+def compressDB(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, compresses datbaase. 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting database compression&#34;)
+
+        # The database connection file that connects to the enterprise geodatabase to be compressed.
+        arcpy.Compress_management(sde) 
+
+        logging.info(&#39;Compression complete&#39;)
+
+
+def rebuildIndex(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, lists all datasets within
+        database, including feature classes and datasets within feature datasets.
+        For each dataset that is owned by the user the database connection is
+        configured, the indexes will be rebuilt. Includes ALL indexes (spatial, 
+        attribute, and database). 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to rebuild indexes&#34;)
+
+        # Set the workspace environment
+        arcpy.env.workspace = sde
+
+        # Get a list of all the datasets the user has access to.
+        # First, get all the stand alone tables, feature classes and rasters.
+        dataList = arcpy.ListTables() + arcpy.ListFeatureClasses() + arcpy.ListRasters()
+
+        # Next, for feature datasets get all of the datasets and featureclasses
+        # from the list and add them to the master list.
+        for dataset in arcpy.ListDatasets(&#34;&#34;, &#34;Feature&#34;):
+                arcpy.env.workspace = os.path.join(sde, dataset)
+                dataList += arcpy.ListFeatureClasses() + arcpy.ListDatasets()
+
+        # Reset the workspace
+        arcpy.env.workspace = sde
+
+        # Get the user name for the workspace
+        userName = arcpy.Describe(sde).connectionProperties.user.lower()
+
+        logging.info(f&#34;Filtering dataset list to those owned by {userName}&#34;)
+        # remove any datasets that are not owned by the connected user.
+        userDataList = [ds for ds in dataList if ds.lower().find(f&#34;.{userName}.&#34;) &gt; -1]
+
+        # Execute rebuild indexes
+        # Note: to use the &#34;SYSTEM&#34; option the workspace user must be an administrator.
+        arcpy.RebuildIndexes_management(sde, &#34;NO_SYSTEM&#34;, userDataList, &#34;ALL&#34;)
+
+        logging.info(&#39;Rebuild complete&#39;)
+
+
+def analyzeDatasets(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, lists all datasets within
+        database owned by the user the database connection is configured, 
+        including feature classes and datasets within feature datasets.
+        Each dataset is analyzed (statistics are updated). 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to analyze datasets&#34;)
+
+        # set the workspace environment
+        arcpy.env.workspace = sde
+
+        # Get the user name for the workspace
+        userName = arcpy.Describe(sde).connectionProperties.user
+
+        # Get a list of all the datasets the user owns by using a wildcard that 
+        # incldues the user name
+        # First, get all the stand alone tables, feature classes and rasters.
+        dataList = arcpy.ListTables(userName + &#34;*&#34;) + \
+                                arcpy.ListFeatureClasses(userName + &#34;*&#34;) + \
+                                arcpy.ListRasters(userName + &#34;*&#34;)
+
+        # Next, for feature datasets get all of the datasets and featureclasses
+        # from the list and add them to the master list.
+        for dataset in arcpy.ListDatasets(userName + &#34;*&#34;, &#34;Feature&#34;):
+                arcpy.env.workspace = os.path.join(sde, dataset)
+                dataList += arcpy.ListFeatureClasses(userName + &#34;*&#34;) + \
+                                        arcpy.ListDatasets(userName + &#34;*&#34;)
+
+        # reset the workspace
+        arcpy.env.workspace = sde
+
+        # Execute analyze datasets
+        # Note: to use the &#34;SYSTEM&#34; option the workspace user must be an administrator.
+        arcpy.AnalyzeDatasets_management(sde, 
+                                                                        &#34;NO_SYSTEM&#34;, 
+                                                                        dataList, 
+                                                                        &#34;ANALYZE_BASE&#34;,
+                                                                        &#34;ANALYZE_DELTA&#34;,
+                                                                        &#34;ANALYZE_ARCHIVE&#34;)
+
+        logging.info(&#34;Analyze complete&#34;)
+
+
+def deleteCxn(sde):
+        &#39;&#39;&#39;
+        Determines if the input database connection file exists. If so,
+        deletes connection file. This function should only be called
+        if the connection file was built for temporary use. 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;     
+
+        logging.info(&#34;Starting to delete connection string&#34;)
+
+        if os.path.exists(sde):
+                logging.info(&#34;File exists&#34;)
+                try:
+                        os.remove(sde)
+                        logging.info(&#34;File deleted&#34;)
+                except PermissionError:
+                        logging.warn(&#34;User does not have necessary permissions to \
+                                                delete connection file&#34;)
+        else:
+                logging.warn(f&#34;Could not find connection file {sde}&#34;)
+        
+
+if __name__ == &#34;__main__&#34;:
+
+        # timestamp
+        timestamp = datetime.datetime.today().strftime(&#34;%Y%m%d&#34;)
+        start_time = datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;)
+
+        # set paths
+        home_fldr = os.path.dirname(__file__)
+
+        cfg_fldr = os.path.join(home_fldr, &#34;configs&#34;)
+        env_file = os.path.join(cfg_fldr, &#34;env.json&#34;)
+        cfg_file = os.path.join(cfg_fldr, &#34;config.json&#34;)
+        sde_cxn_fldr = os.path.join(home_fldr, &#34;sde_cxn&#34;)
+        log_fldr = os.path.join(home_fldr, &#34;logs&#34;)
+
+        # set logging
+        log_file = os.path.join(log_fldr, f&#34;db_maintenance_{timestamp}.log&#34;)
+        logging.basicConfig(level=logging.INFO,
+                                                format=&#39;%(levelname)s: %(asctime)s %(message)s&#39;,
+                                                datefmt=&#39;%Y/%m/%d %H:%M:%S&#39;,
+                                                handlers=[logging.FileHandler(log_file),
+                                                                logging.StreamHandler(sys.stdout)])
+        
+        logging.info(start_time)
+        logging.info(&#34;Starting run of DB maintenance...&#34;)
+        logging.info(&#34;Reading configs&#34;)
+
+        # read configs
+        with open(env_file) as f:
+                env = (json.load(f))[&#34;env&#34;]
+        
+        logging.info(f&#34;Working in env: {env}&#34;)
+
+        with open(cfg_file) as f:
+                cfg = (json.load(f))[env]
+
+        # run funcs
+        sde, built = buildCxn(cfg)
+        reconcileVersions(sde)
+        compressDB(sde)
+        rebuildIndex(sde)
+        analyzeDatasets(sde)
+        if built:
+                deleteCxn(sde)
+
+        logging.info(&#34;Completed DB maintenance! \n\n&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="DB-maintenance-funcs.analyzeDatasets"><code class="name flex">
+<span>def <span class="ident">analyzeDatasets</span></span>(<span>sde)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Using the input database connection file, lists all datasets within
+database owned by the user the database connection is configured,
+including feature classes and datasets within feature datasets.
+Each dataset is analyzed (statistics are updated). </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>sde</code></strong></dt>
+<dd>connection file to sde (enterprise geodatabase).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyzeDatasets(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, lists all datasets within
+        database owned by the user the database connection is configured, 
+        including feature classes and datasets within feature datasets.
+        Each dataset is analyzed (statistics are updated). 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to analyze datasets&#34;)
+
+        # set the workspace environment
+        arcpy.env.workspace = sde
+
+        # Get the user name for the workspace
+        userName = arcpy.Describe(sde).connectionProperties.user
+
+        # Get a list of all the datasets the user owns by using a wildcard that 
+        # incldues the user name
+        # First, get all the stand alone tables, feature classes and rasters.
+        dataList = arcpy.ListTables(userName + &#34;*&#34;) + \
+                                arcpy.ListFeatureClasses(userName + &#34;*&#34;) + \
+                                arcpy.ListRasters(userName + &#34;*&#34;)
+
+        # Next, for feature datasets get all of the datasets and featureclasses
+        # from the list and add them to the master list.
+        for dataset in arcpy.ListDatasets(userName + &#34;*&#34;, &#34;Feature&#34;):
+                arcpy.env.workspace = os.path.join(sde, dataset)
+                dataList += arcpy.ListFeatureClasses(userName + &#34;*&#34;) + \
+                                        arcpy.ListDatasets(userName + &#34;*&#34;)
+
+        # reset the workspace
+        arcpy.env.workspace = sde
+
+        # Execute analyze datasets
+        # Note: to use the &#34;SYSTEM&#34; option the workspace user must be an administrator.
+        arcpy.AnalyzeDatasets_management(sde, 
+                                                                        &#34;NO_SYSTEM&#34;, 
+                                                                        dataList, 
+                                                                        &#34;ANALYZE_BASE&#34;,
+                                                                        &#34;ANALYZE_DELTA&#34;,
+                                                                        &#34;ANALYZE_ARCHIVE&#34;)
+
+        logging.info(&#34;Analyze complete&#34;)</code></pre>
+</details>
+</dd>
+<dt id="DB-maintenance-funcs.buildCxn"><code class="name flex">
+<span>def <span class="ident">buildCxn</span></span>(<span>cfg)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reads json dictionary for database connection inforamtion.
+If a connection string is provided, that will be prioritized.
+If no connection string is provided, a new connection will be
+built using provided parameters in config file.
+The json dictionary is expected to have the following keys:
+sde_cxn, rdbms, instance, auth, un, pw, db_name, verison</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>cfg</code></strong></dt>
+<dd>JSON dict containing the following keys at minimum-
+sde_cxn, rdbms, instance, auth, un, pw, db_name, verison.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>sde</code></dt>
+<dd>path to sde (Enterprise geodatabase) connection file.</dd>
+<dt><code>built</code></dt>
+<dd>Boolean indicating if the connection file was created
+in this function. Used to determine if file can be removed
+after database maintenance completes.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def buildCxn(cfg):
+        &#39;&#39;&#39;
+        Reads json dictionary for database connection inforamtion.
+        If a connection string is provided, that will be prioritized. 
+        If no connection string is provided, a new connection will be 
+        built using provided parameters in config file. 
+        The json dictionary is expected to have the following keys:
+                sde_cxn, rdbms, instance, auth, un, pw, db_name, verison
+        Args:
+                cfg: JSON dict containing the following keys at minimum- 
+                        sde_cxn, rdbms, instance, auth, un, pw, db_name, verison.
+        Returns:
+                sde: path to sde (Enterprise geodatabase) connection file.
+                built: Boolean indicating if the connection file was created 
+                        in this function. Used to determine if file can be removed
+                        after database maintenance completes. 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to build connection file&#34;)
+
+        # Set database connection
+        built = 0
+        db_cxn_vars = [cfg[x] for x in [&#34;rdbms&#34;, &#34;instance&#34;, &#34;auth&#34;, &#34;un&#34;, &#34;pw&#34;, &#34;db_name&#34;]]
+        try:
+                if cfg[&#34;sde_cxn&#34;]:
+                        # if cxn string provided, use that
+                        sde = cfg[&#34;sde_cxn&#34;]
+                        logging.info(f&#34;Using connection string: {sde}&#34;)
+                elif all(db_cxn_vars):
+                        # if no cxn string and all required cxn params
+                        # provied, build new cxn string
+                        logging.info(&#34;Buidling new connection string&#34;)
+                        rdbms, instance, auth, un, pw, db_name = db_cxn_vars
+                        version = cfg[&#34;version&#34;]
+                        try:
+                                arcpy.CreateDatabaseConnection_management(sde_cxn_fldr,
+                                                                                                        f&#34;{un}@{db_name}&#34;, 
+                                                                                                        rdbms, 
+                                                                                                        instance, 
+                                                                                                        auth, 
+                                                                                                        un, 
+                                                                                                        pw, 
+                                                                                                        database=db_name,
+                                                                                                        version=version)
+                                sde = os.path.join(sde_cxn_fldr, f&#34;{un}@{db_name}.sde&#34;)
+                                logging.info(f&#34;Using connection string: {sde}&#34;)
+                                built = 1
+                        except Exception as e:
+                                logging.error(e)
+                else:
+                        # cannot connect to database
+                        logging.error(&#34;Missing required information to connect to database. \n \
+                                Confirm the env and config files contain either a connection \n \
+                                string or information to build a new connection file.&#34;)
+                        sys.exit(1)
+        except KeyError:
+                logging.error(&#34;Key missing from config file. \n \
+                        The config (json) must contain the following keys, regardless if the \
+                        key has a value: sde_cxn, rdbms, instance, auth, un, pw, db_name, verison&#34;)
+                sys.exit(1)
+        except Exception as e:
+                logging.error(e)
+                sys.exit(1)
+
+        return(sde, built)</code></pre>
+</details>
+</dd>
+<dt id="DB-maintenance-funcs.compressDB"><code class="name flex">
+<span>def <span class="ident">compressDB</span></span>(<span>sde)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Using the input database connection file, compresses datbaase. </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>sde</code></strong></dt>
+<dd>connection file to sde (enterprise geodatabase).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compressDB(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, compresses datbaase. 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting database compression&#34;)
+
+        # The database connection file that connects to the enterprise geodatabase to be compressed.
+        arcpy.Compress_management(sde) 
+
+        logging.info(&#39;Compression complete&#39;)</code></pre>
+</details>
+</dd>
+<dt id="DB-maintenance-funcs.deleteCxn"><code class="name flex">
+<span>def <span class="ident">deleteCxn</span></span>(<span>sde)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Determines if the input database connection file exists. If so,
+deletes connection file. This function should only be called
+if the connection file was built for temporary use. </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>sde</code></strong></dt>
+<dd>connection file to sde (enterprise geodatabase).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deleteCxn(sde):
+        &#39;&#39;&#39;
+        Determines if the input database connection file exists. If so,
+        deletes connection file. This function should only be called
+        if the connection file was built for temporary use. 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;     
+
+        logging.info(&#34;Starting to delete connection string&#34;)
+
+        if os.path.exists(sde):
+                logging.info(&#34;File exists&#34;)
+                try:
+                        os.remove(sde)
+                        logging.info(&#34;File deleted&#34;)
+                except PermissionError:
+                        logging.warn(&#34;User does not have necessary permissions to \
+                                                delete connection file&#34;)
+        else:
+                logging.warn(f&#34;Could not find connection file {sde}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="DB-maintenance-funcs.rebuildIndex"><code class="name flex">
+<span>def <span class="ident">rebuildIndex</span></span>(<span>sde)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Using the input database connection file, lists all datasets within
+database, including feature classes and datasets within feature datasets.
+For each dataset that is owned by the user the database connection is
+configured, the indexes will be rebuilt. Includes ALL indexes (spatial,
+attribute, and database). </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>sde</code></strong></dt>
+<dd>connection file to sde (enterprise geodatabase).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rebuildIndex(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, lists all datasets within
+        database, including feature classes and datasets within feature datasets.
+        For each dataset that is owned by the user the database connection is
+        configured, the indexes will be rebuilt. Includes ALL indexes (spatial, 
+        attribute, and database). 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to rebuild indexes&#34;)
+
+        # Set the workspace environment
+        arcpy.env.workspace = sde
+
+        # Get a list of all the datasets the user has access to.
+        # First, get all the stand alone tables, feature classes and rasters.
+        dataList = arcpy.ListTables() + arcpy.ListFeatureClasses() + arcpy.ListRasters()
+
+        # Next, for feature datasets get all of the datasets and featureclasses
+        # from the list and add them to the master list.
+        for dataset in arcpy.ListDatasets(&#34;&#34;, &#34;Feature&#34;):
+                arcpy.env.workspace = os.path.join(sde, dataset)
+                dataList += arcpy.ListFeatureClasses() + arcpy.ListDatasets()
+
+        # Reset the workspace
+        arcpy.env.workspace = sde
+
+        # Get the user name for the workspace
+        userName = arcpy.Describe(sde).connectionProperties.user.lower()
+
+        logging.info(f&#34;Filtering dataset list to those owned by {userName}&#34;)
+        # remove any datasets that are not owned by the connected user.
+        userDataList = [ds for ds in dataList if ds.lower().find(f&#34;.{userName}.&#34;) &gt; -1]
+
+        # Execute rebuild indexes
+        # Note: to use the &#34;SYSTEM&#34; option the workspace user must be an administrator.
+        arcpy.RebuildIndexes_management(sde, &#34;NO_SYSTEM&#34;, userDataList, &#34;ALL&#34;)
+
+        logging.info(&#39;Rebuild complete&#39;)</code></pre>
+</details>
+</dd>
+<dt id="DB-maintenance-funcs.reconcileVersions"><code class="name flex">
+<span>def <span class="ident">reconcileVersions</span></span>(<span>sde)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Using the input database connection file, gets list of all versions
+except DEFAULT for reconiliation.
+First, all versions are recondiled to their targets without post. If
+first reconciliation completes, a second reconiliation occurs with
+posting to their target. Versions are maintained. </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>sde</code></strong></dt>
+<dd>connection file to sde (enterprise geodatabase).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reconcileVersions(sde):
+        &#39;&#39;&#39;
+        Using the input database connection file, gets list of all versions 
+        except DEFAULT for reconiliation. 
+        First, all versions are recondiled to their targets without post. If
+        first reconciliation completes, a second reconiliation occurs with 
+        posting to their target. Versions are maintained. 
+        Args:
+                sde: connection file to sde (enterprise geodatabase). 
+        &#39;&#39;&#39;
+
+        logging.info(&#34;Starting to reconcile versions&#34;)
+
+        # Set the workspace environment
+        arcpy.env.workspace = sde
+
+        # Use a list comprehension to get a list of version names where the owner
+        # is the current user and make sure sde.default is not selected.
+        # removed ver.isOwner == True, TODO: determine if this works for Solano
+        logging.info(&#34;Listing all child versions&#34;)
+        verList = [ver.name for ver in arcpy.da.ListVersions() if 
+                                ver.name.lower() != &#39;sde.default&#39;] 
+
+        logging.info(&#39;Starting the 1st reconciliation&#39;)
+
+        arcpy.ReconcileVersions_management(sde,
+                                                                        &#34;ALL_VERSIONS&#34;,
+                                                                        &#34;SDE.Default&#34;,
+                                                                        verList,
+                                                                        &#34;LOCK_ACQUIRED&#34;,
+                                                                        &#34;NO_ABORT&#34;,
+                                                                        &#34;BY_OBJECT&#34;, #TODO: look into for conflicts
+                                                                        &#34;FAVOR_TARGET_VERSION&#34;,
+                                                                        &#34;NO_POST&#34;,
+                                                                        &#34;KEEP_VERSION&#34;,
+                                                                        f&#34;{log_fldr}, RecLog_{timestamp}.txt&#34;)
+        logging.info(&#39;Reconciling part 1 complete&#39;)
+
+        logging.info(&#39;Starting the 2nd reconciliation with post&#39;)
+
+        arcpy.ReconcileVersions_management(sde,
+                                                                        &#34;ALL_VERSIONS&#34;,
+                                                                        &#34;SDE.Default&#34;,
+                                                                        verList,
+                                                                        &#34;LOCK_ACQUIRED&#34;,
+                                                                        &#34;NO_ABORT&#34;,
+                                                                        &#34;BY_OBJECT&#34;,
+                                                                        &#34;FAVOR_TARGET_VERSION&#34;,
+                                                                        &#34;POST&#34;, 
+                                                                        &#34;KEEP_VERSION&#34;,
+                                                                        f&#34;{log_fldr}, RecLog_{timestamp}.txt&#34;)
+
+        logging.info(&#39;Reconciling part 2 complete&#39;)
+        logging.info(&#39;Versions have been posted after reconciliation&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="DB-maintenance-funcs.analyzeDatasets" href="#DB-maintenance-funcs.analyzeDatasets">analyzeDatasets</a></code></li>
+<li><code><a title="DB-maintenance-funcs.buildCxn" href="#DB-maintenance-funcs.buildCxn">buildCxn</a></code></li>
+<li><code><a title="DB-maintenance-funcs.compressDB" href="#DB-maintenance-funcs.compressDB">compressDB</a></code></li>
+<li><code><a title="DB-maintenance-funcs.deleteCxn" href="#DB-maintenance-funcs.deleteCxn">deleteCxn</a></code></li>
+<li><code><a title="DB-maintenance-funcs.rebuildIndex" href="#DB-maintenance-funcs.rebuildIndex">rebuildIndex</a></code></li>
+<li><code><a title="DB-maintenance-funcs.reconcileVersions" href="#DB-maintenance-funcs.reconcileVersions">reconcileVersions</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

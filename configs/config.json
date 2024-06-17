@@ -1,0 +1,34 @@
+{
+    "_comment": "recommend populating sde_cxn and connection parameters. Preference is placed on sde_cxn string.",
+    "dev":{
+        "sde_cxn": "",
+        "rdbms": "SQL_SERVER",
+        "instance": "",
+        "auth": "DATABASE_ATUH",
+        "un": "",
+        "pw": "",
+        "db_name": "",
+        "version": ""
+    },
+    "stage":{
+        "sde_cxn": "",
+        "rdbms": "SQL_SERVER",
+        "instance": "",
+        "auth": "DATABASE_ATUH",
+        "un": "",
+        "pw": "",
+        "db_name": "",
+        "version": ""
+    },
+    "prod":{
+        "sde_cxn": "",
+        "rdbms": "SQL_SERVER",
+        "instance": "",
+        "auth": "DATABASE_ATUH",
+        "un": "",
+        "pw": "",
+        "db_name": "",
+        "version": ""
+    }
+}
+
